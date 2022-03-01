@@ -1,0 +1,31 @@
+{
+	"name": "wpinc-blok",
+	"version": "0.1.0",
+	"description": "A Block Library of WordPress Block Editor",
+	"author": "Takuto Yanagida",
+	"license": "MIT",
+	"scripts": {
+		"build": "wp-scripts build",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start:gulp": "gulp",
+		"start:wp": "wp-scripts start",
+		"start": "run-p start:*"
+	},
+	"devDependencies": {
+		"@wordpress/icons": "^7.0.1",
+		"@wordpress/scripts": "^21.0.2",
+		"copy-webpack-plugin": "^6.4.1",
+		"gulp": "^4.0.2",
+		"gulp-changed": "^4.0.3",
+		"gulp-gettext": "^0.3.0",
+		"gulp-load-plugins": "^2.0.7",
+		"gulp-plumber": "^1.2.1",
+		"gulp-rename": "^2.0.0",
+		"npm-run-all": "^4.1.5",
+		"remove-files-webpack-plugin": "^1.5.0"
+	}
+}
