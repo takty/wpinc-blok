@@ -5,7 +5,6 @@
 	"version": "0.1.0",
 	"title": "Cards",
 	"category": "design",
-	"icon": "category",
 	"description": "Display content in multiple cards, with blocks added to each card.",
 	"supports": {
 		"html": false

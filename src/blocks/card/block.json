@@ -8,7 +8,6 @@
 	"parent": [
 		"wpinc/cards"
 	],
-	"icon": "category",
 	"description": "A single card within a cards block.",
 	"supports": {
 		"html": false
