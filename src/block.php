@@ -45,9 +45,6 @@ function initialize( ?string $category_title = null ): void {
  * @return array Categories.
  */
 function _cb_block_categories_all( array $categories, string $title ): array {
-	if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
-		return $categories;
-	}
 	$cats = array(
 		array(
 			'slug'  => 'wpinc',
