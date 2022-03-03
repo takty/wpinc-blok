@@ -4,7 +4,7 @@
 	"name": "wpinc/tabs",
 	"version": "0.1.0",
 	"title": "Tabs",
-	"category": "design",
+	"category": "wpinc",
 	"description": "Headings are converted to tabs, and you can switch among contents by clicking on them. There are two ways to display tabs: 'scroll' and 'stack'.",
 	"supports": {
 		"html": false

@@ -4,7 +4,7 @@
  *
  * @package Sample
  * @author Takuto Yanagida
- * @version 2022-03-01
+ * @version 2022-03-03
  */
 
 namespace sample {
@@ -12,8 +12,10 @@ namespace sample {
 
 	/**
 	 * Initializes.
+	 *
+	 * @param string|null $category_title Title of added category.
 	 */
-	function initialize() {
-		\wpinc\blok\initialize();
+	function initialize( ?string $category_title = null ): void {
+		\wpinc\blok\initialize( $category_title );
 	}
 }

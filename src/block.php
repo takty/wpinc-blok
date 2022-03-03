@@ -11,15 +11,50 @@ namespace wpinc\blok;
 
 /**
  * Initializes.
+ *
+ * @param string|null $category_title Title of added category.
  */
-function initialize() {
-	$blocks = array( 'tabs', 'cards', 'card' );
+function initialize( ?string $category_title = null ): void {
+	if ( null === $category_title ) {
+		$category_title = __( 'Custom', 'wpinc_blok' );
+	}
+	add_action(
+		'block_categories_all',
+		function ( $categories ) use ( $category_title ) {
+			return _cb_block_categories_all( $categories, $category_title );
+		},
+		10
+	);
 
 	add_filter( 'plugins_url', '\wpinc\blok\_cb_plugins_url', 10, 3 );
+	$blocks = array( 'tabs', 'cards', 'card' );
+
 	foreach ( $blocks as $b ) {
 		register_block_type( __DIR__ . "/blocks/$b" );
 		wp_set_script_translations( "wpinc-$b-editor-script", 'wpinc', __DIR__ . '\languages' );
 	}
+}
+
+/**
+ * Callback function for 'block_categories_all' filter.
+ *
+ * @access private
+ *
+ * @param array[] $categories Array of categories for block types.
+ * @param string  $title      Title of added category.
+ * @return array Categories.
+ */
+function _cb_block_categories_all( array $categories, string $title ): array {
+	if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+		return $categories;
+	}
+	$cats = array(
+		array(
+			'slug'  => 'wpinc',
+			'title' => $title,
+		),
+	);
+	return array_merge( $cats, $categories );
 }
 
 /**

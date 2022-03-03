@@ -4,7 +4,7 @@
 	"name": "wpinc/card",
 	"version": "0.1.0",
 	"title": "Card",
-	"category": "design",
+	"category": "wpinc",
 	"parent": [
 		"wpinc/cards"
 	],
