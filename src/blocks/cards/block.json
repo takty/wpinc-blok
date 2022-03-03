@@ -7,7 +7,8 @@
 	"category": "wpinc",
 	"description": "Display content in multiple cards, with blocks added to each card.",
 	"supports": {
-		"html": false
+		"html": false,
+		"className": false
 	},
 	"attributes": {
 		"number": {

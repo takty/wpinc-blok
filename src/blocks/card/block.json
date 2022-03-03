@@ -10,7 +10,8 @@
 	],
 	"description": "A single card within a cards block.",
 	"supports": {
-		"html": false
+		"html": false,
+		"className": false
 	},
 	"textdomain": "wpinc_blok",
 	"editorScript": "file:./index.js",
