@@ -16,7 +16,6 @@
 		"start": "run-p start:*"
 	},
 	"devDependencies": {
-		"@wordpress/icons": "^7.0.1",
 		"@wordpress/scripts": "^21.0.2",
 		"copy-webpack-plugin": "^6.4.1",
 		"gulp": "^4.0.2",

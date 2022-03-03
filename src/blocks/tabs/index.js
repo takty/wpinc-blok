@@ -1,7 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { BlockControls, InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import { Toolbar, ToolbarButton } from '@wordpress/components';
-import { pullquote, stack } from '@wordpress/icons';
 import { registerBlockType } from '@wordpress/blocks';
 
 import './style.scss';
