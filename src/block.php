@@ -4,7 +4,7 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2022-03-01
+ * @version 2022-03-03
  */
 
 namespace wpinc\blok;
@@ -13,8 +13,9 @@ namespace wpinc\blok;
  * Initializes.
  */
 function initialize() {
+	$blocks = array( 'tabs', 'cards', 'card' );
+
 	add_filter( 'plugins_url', '\wpinc\blok\_cb_plugins_url', 10, 3 );
-	$blocks = array( 'tab' );
 	foreach ( $blocks as $b ) {
 		register_block_type( __DIR__ . "/blocks/$b" );
 		wp_set_script_translations( "wpinc-$b-editor-script", 'wpinc', __DIR__ . '\languages' );

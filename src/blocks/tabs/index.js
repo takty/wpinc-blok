@@ -11,9 +11,11 @@ function edit({ attributes, setAttributes }) {
 	const { type } = attributes;
 	const setType  = type => setAttributes({ type });
 
+	const label      = __('scroll' === type ? 'Tabs [Scroll]' : 'Tabs [Stack]', 'wpinc');
 	const blockProps = useBlockProps();
+
 	return (
-		<div data-type-label={'scroll' === type ? __('Tab [Scroll]', 'wpinc') : __('Tab [Stack]', 'wpinc')} {...blockProps}>
+		<div data-container-label={label} {...blockProps}>
 			{
 				<BlockControls>
 					<Toolbar>
@@ -38,7 +40,9 @@ function edit({ attributes, setAttributes }) {
 }
 
 function save({ attributes }) {
-	const blockProps = useBlockProps.save({ className: 'scroll' === attributes.type ? 'pseudo-tab-page' : 'tab-page' });
+	const blockProps = useBlockProps.save({
+		className: `tab-${attributes.type}`
+	});
 
 	return (
 		<div {...blockProps}>
@@ -47,7 +51,7 @@ function save({ attributes }) {
 	);
 }
 
-registerBlockType('wpinc/tab', {
+registerBlockType('wpinc/tabs', {
 	edit,
 	save,
 });

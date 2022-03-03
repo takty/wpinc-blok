@@ -1,14 +1,34 @@
 # Translation of Blok - Development in Japanese
 # @package Wpinc Blok
 # @author Takuto Yanagida
-# @version 2022-03-01
+# @version 2022-03-03
 
-# Tab --------------------------------------------------------------------------
+# Tabs -------------------------------------------------------------------------
 
 msgctxt "block title"
-msgid "Tab"
+msgid "Tabs"
 msgstr "タブ"
 
 msgctxt "block description"
-msgid "By clicking on the tabs that appear, you can switch between the contents. There are two ways to display tabs: 'scroll' and 'stack'."
-msgstr "表示されたタブをクリックすることによって、内容を切り替えられます。タブの表示方法には、スクロールとスタックの2種類があります。"
+msgid "Headings are converted to tabs, and you can switch among contents by clicking on them. There are two ways to display tabs: 'scroll' and 'stack'."
+msgstr "見出しはタブに変換され、それをクリックすることによって、内容を切り替えられます。タブの表示方法には、スクロールとスタックの2種類があります。"
+
+# Cards ------------------------------------------------------------------------
+
+msgctxt "block title"
+msgid "Cards"
+msgstr "カード"
+
+msgctxt "block description"
+msgid "Display content in multiple cards, with blocks added to each card."
+msgstr "複数のカード内にコンテンツや追加されたブロックを表示します。"
+
+# Card -------------------------------------------------------------------------
+
+msgctxt "block title"
+msgid "Card"
+msgstr "カード"
+
+msgctxt "block description"
+msgid "A single card within a cards block."
+msgstr "カードブロック内の1つのカード。"

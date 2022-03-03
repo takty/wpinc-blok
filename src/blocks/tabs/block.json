@@ -1,12 +1,12 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
-	"name": "wpinc/tab",
+	"name": "wpinc/tabs",
 	"version": "0.1.0",
-	"title": "Tab",
+	"title": "Tabs",
 	"category": "design",
 	"icon": "category",
-	"description": "By clicking on the tabs that appear, you can switch between the contents. There are two ways to display tabs: 'scroll' and 'stack'.",
+	"description": "Headings are converted to tabs, and you can switch among contents by clicking on them. There are two ways to display tabs: 'scroll' and 'stack'.",
 	"supports": {
 		"html": false
 	},
