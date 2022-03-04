@@ -16,7 +16,7 @@
 		"start": "run-p start:*"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^21.0.2",
+		"@wordpress/scripts": "^22.1.0",
 		"copy-webpack-plugin": "^6.4.1",
 		"gulp": "^4.0.2",
 		"gulp-changed": "^4.0.3",
