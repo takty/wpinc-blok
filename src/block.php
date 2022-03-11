@@ -4,7 +4,7 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2022-03-03
+ * @version 2022-03-11
  */
 
 namespace wpinc\blok;
@@ -70,4 +70,31 @@ function _cb_plugins_url( string $url, string $path, string $plugin ): string {
 		return \wpinc\abs_url( \wpinc\get_file_uri( dirname( $plugin ) ), $path );
 	}
 	return $url;
+}
+
+
+// -----------------------------------------------------------------------------
+
+
+/**
+ * Sets used heading tags.
+ *
+ * @param int $first_level First level of heading tag.
+ * @param int $count       Count of headings.
+ */
+function set_used_heading( int $first_level = 2, int $count = 3 ): void {
+	if ( ! is_admin() ) {
+		return;
+	}
+	$ls = array_diff(
+		range( 1, 6 ),
+		range( $first_level, $first_level + $count - 1 )
+	);
+	$hs = array();
+	foreach ( $ls as $l ) {
+		$h    = __( 'Heading ' . $l );  // phpcs:ignore
+		$hs[] = "[aria-label=\"$h\"]";
+	}
+	$style = implode( ',', $hs ) . '{display:none;}';
+	wp_add_inline_style( 'wp-admin', $style );
 }
