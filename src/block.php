@@ -27,7 +27,7 @@ function initialize( ?string $category_title = null ): void {
 	);
 
 	add_filter( 'plugins_url', '\wpinc\blok\_cb_plugins_url', 10, 3 );
-	$blocks = array( 'tabs', 'cards', 'card' );
+	$blocks = array( 'card', 'cards', 'frame', 'tabs' );
 
 	foreach ( $blocks as $b ) {
 		register_block_type( __DIR__ . "/blocks/$b" );

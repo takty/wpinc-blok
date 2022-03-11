@@ -78,7 +78,8 @@ const buildBlockConfig = (block_name) => buildConfig(
 );
 
 module.exports = [
-	buildBlockConfig('tabs'),
-	buildBlockConfig('cards'),
 	buildBlockConfig('card'),
+	buildBlockConfig('cards'),
+	buildBlockConfig('frame'),
+	buildBlockConfig('tabs'),
 ];

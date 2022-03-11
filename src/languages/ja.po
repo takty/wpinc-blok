@@ -8,15 +8,15 @@
 msgid "Custom"
 msgstr "カスタム"
 
-# Tabs -------------------------------------------------------------------------
+# Card -------------------------------------------------------------------------
 
 msgctxt "block title"
-msgid "Tabs"
-msgstr "タブ"
+msgid "Card"
+msgstr "カード"
 
 msgctxt "block description"
-msgid "Headings are converted to tabs, and you can switch among contents by clicking on them. There are two ways to display tabs: 'scroll' and 'stack'."
-msgstr "見出しはタブに変換され、それをクリックすることによって、内容を切り替えられます。タブの表示方法には、スクロールとスタックの2種類があります。"
+msgid "A single card within a cards block."
+msgstr "カードブロック内の1つのカード。"
 
 # Cards ------------------------------------------------------------------------
 
@@ -28,12 +28,23 @@ msgctxt "block description"
 msgid "Display content in multiple cards, with blocks added to each card."
 msgstr "複数のカード内にコンテンツや追加されたブロックを表示します。"
 
-# Card -------------------------------------------------------------------------
+# Frame ------------------------------------------------------------------------
 
 msgctxt "block title"
-msgid "Card"
-msgstr "カード"
+msgid "Frame"
+msgstr "枠"
 
 msgctxt "block description"
-msgid "A single card within a cards block."
-msgstr "カードブロック内の1つのカード。"
+msgid "Put the blocks together in a frame."
+msgstr "ブロックを枠にまとめます。"
+
+# Tabs -------------------------------------------------------------------------
+
+msgctxt "block title"
+msgid "Tabs"
+msgstr "タブ"
+
+msgctxt "block description"
+msgid "Headings are converted to tabs, and you can switch among contents by clicking on them. There are two ways to display tabs: 'scroll' and 'stack'."
+msgstr "見出しはタブに変換され、それをクリックすることによって、内容を切り替えられます。タブの表示方法には、スクロールとスタックの2種類があります。"
+
