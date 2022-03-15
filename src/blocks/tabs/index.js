@@ -1,3 +1,10 @@
+/**
+ * Tabs block
+ *
+ * @author Takuto Yanagida
+ * @version 2022-03-15
+ */
+
 import { __ } from '@wordpress/i18n';
 import { BlockControls, InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import { Toolbar, ToolbarButton } from '@wordpress/components';
@@ -43,8 +50,11 @@ function edit({ attributes, setAttributes }) {
 }
 
 function save({ attributes }) {
+	const cls_scroll = window?.wpinc_tabs_args?.class_tab_scroll ?? 'tab-scroll';
+	const cls_stack  = window?.wpinc_tabs_args?.class_tab_stack  ?? 'tab-stack';
+
 	const blockProps = useBlockProps.save({
-		className: `tab-${attributes.type}`
+		className: 'scroll' === attributes.type ? cls_scroll : cls_stack
 	});
 
 	return (

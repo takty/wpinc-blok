@@ -1,3 +1,10 @@
+/**
+ * Card block
+ *
+ * @author Takuto Yanagida
+ * @version 2022-03-15
+ */
+
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import { registerBlockType } from '@wordpress/blocks';
 

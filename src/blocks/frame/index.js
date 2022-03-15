@@ -1,3 +1,10 @@
+/**
+ * Frame block
+ *
+ * @author Takuto Yanagida
+ * @version 2022-03-15
+ */
+
 import { __ } from '@wordpress/i18n';
 import { BlockControls, InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import { Toolbar, ToolbarButton } from '@wordpress/components';
@@ -10,12 +17,17 @@ const icon_block  = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
 const icon_normal = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M35.5 39h-23A3.5 3.5 0 0 1 9 35.5v-23A3.5 3.5 0 0 1 12.5 9h23a3.5 3.5 0 0 1 3.5 3.5v23a3.5 3.5 0 0 1-3.5 3.5Zm-23-27a.5.5 0 0 0-.5.5v23a.5.5 0 0 0 .5.5h23a.5.5 0 0 0 .5-.5v-23a.5.5 0 0 0-.5-.5Z" /></svg>;
 const icon_alt    = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M36 39h-3.4a1.5 1.5 0 1 1 0-3H36v.08a1.5 1.5 0 0 1 0 2.84Zm-9.21 0h-2.9a1.5 1.5 0 0 1 0-3h2.9a1.5 1.5 0 0 1 0 3Zm-8.71 0h-2.9a1.5 1.5 0 0 1 0-3h2.9a1.5 1.5 0 0 1 0 3Zm-7.58-2A1.5 1.5 0 0 1 9 35.5v-2.9a1.5 1.5 0 0 1 3 0v2.9a1.5 1.5 0 0 1-1.5 1.5Zm27-2.69a1.5 1.5 0 0 1-1.5-1.5v-2.9a1.5 1.5 0 0 1 3 0v2.9a1.5 1.5 0 0 1-1.5 1.5Zm-27-6.02A1.5 1.5 0 0 1 9 26.8v-2.9a1.5 1.5 0 0 1 3 0v2.9a1.5 1.5 0 0 1-1.5 1.5Zm27-2.7a1.5 1.5 0 0 1-1.5-1.5v-2.9a1.5 1.5 0 0 1 3 0v2.9a1.5 1.5 0 0 1-1.5 1.5Zm-27-6a1.5 1.5 0 0 1-1.5-1.5v-2.91a1.5 1.5 0 0 1 3 0v2.9a1.5 1.5 0 0 1-1.5 1.5Zm27-2.7a1.5 1.5 0 0 1-1.5-1.5V12.5a1.5 1.5 0 0 1 1.5-1.5 1.5 1.5 0 0 1 1.5 1.48v2.9a1.5 1.5 0 0 1-1.5 1.5ZM32.82 12h-2.9a1.5 1.5 0 0 1 0-3h2.9a1.5 1.5 0 0 1 0 3Zm-8.72 0h-2.9a1.5 1.5 0 0 1 0-3h2.9a1.5 1.5 0 0 1 0 3Zm-8.7 0h-2.9a1.5 1.5 0 1 1-.01-3h2.9a1.5 1.5 0 1 1 0 3Z"/></svg>;
 
+const cls_normal = window?.wpinc_frame_args?.class_frame_normal ?? 'frame';
+const cls_alt    = window?.wpinc_frame_args?.class_frame_alt    ?? 'frame-alt';
+
 function edit({ attributes, setAttributes }) {
 	const { type } = attributes;
 	const setType  = type => setAttributes({ type });
 
 	const label      = __('normal' === type ? 'Frame [Normal]' : 'Frame [Alt.]', 'wpinc');
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		className: 'normal' === type ? cls_normal : cls_alt
+	});
 
 	return (
 		<div data-container-label={label} {...blockProps}>
@@ -43,8 +55,10 @@ function edit({ attributes, setAttributes }) {
 }
 
 function save({ attributes }) {
+	const { type } = attributes;
+
 	const blockProps = useBlockProps.save({
-		className: 'normal' === attributes.type ? 'frame' : 'frame-alt'
+		className: 'normal' === type ? cls_normal : cls_alt
 	});
 
 	return (

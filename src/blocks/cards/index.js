@@ -1,3 +1,10 @@
+/**
+ * Cards block
+ *
+ * @author Takuto Yanagida
+ * @version 2022-03-15
+ */
+
 import { __ } from '@wordpress/i18n';
 import { BlockControls, InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import { Toolbar, ToolbarButton } from '@wordpress/components';
@@ -55,8 +62,9 @@ function edit({ attributes, setAttributes }) {
 }
 
 function save({ attributes }) {
+	const cls = window?.wpinc_cards_args?.class_card ?? 'card-%d';
 	const blockProps = useBlockProps.save({
-		className: `card-${attributes.number}`
+		className: cls.replaceAll('%d', attributes.number)
 	});
 
 	return (

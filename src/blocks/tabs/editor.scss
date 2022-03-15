@@ -1,4 +1,9 @@
 /**
+ * Tabs block
+ *
+ * @author Takuto Yanagida
+ * @version 2022-03-15
+ *
  * The following styles get applied inside the editor only.
  */
 
@@ -10,15 +15,15 @@
 
 	position: relative;
 	&::before {
-		content         : attr(data-container-label);
-		position        : absolute;
-		top             : 0;
-		left            : 0;
-		background-color: #fff;
-		border          : 2px solid #fff;
-		color           : var(--wp-admin-theme-color);
-		font-size       : 0.75rem;
-		line-height     : 1;
+		content    : attr(data-container-label);
+		position   : absolute;
+		top        : 0;
+		left       : 0;
+		border     : 2px solid transparent;
+		color      : var(--wp-admin-theme-color);
+		text-shadow: 0 0 2px #fff;
+		font-size  : 0.75rem;
+		line-height: 1;
 	}
 
 	> .block-editor-inner-blocks > .block-editor-block-list__layout {

@@ -4,7 +4,7 @@
  *
  * @package Sample
  * @author Takuto Yanagida
- * @version 2022-03-14
+ * @version 2022-03-15
  */
 
 namespace sample {
@@ -13,10 +13,31 @@ namespace sample {
 	/**
 	 * Initializes.
 	 *
-	 * @param string|null $category_title Title of added category.
+	 * @param array $args {
+	 *     Arguments.
+	 *
+	 *     @type string 'category_title' Title of added category.
+	 *     @type array  'block-cards' {
+	 *         Arguments for cards block.
+	 *
+	 *         @type string 'class_card' CSS class for card block. Default 'card-%d'.
+	 *     }
+	 *     @type array  'block-frame' {
+	 *         Arguments for frame block.
+	 *
+	 *         @type string 'class_frame_normal' CSS class for normal frame. Default 'frame'.
+	 *         @type string 'class_frame_alt'    CSS class for alt. frame. Default 'frame-alt'.
+	 *     }
+	 *     @type array  'block-tabs' {
+	 *         Arguments for tabs block.
+	 *
+	 *         @type string 'class_tab_scroll' CSS class for tab scroll. Default 'tab-scroll',
+	 *         @type string 'class_tab_stack'  CSS class for tab stack. Default 'tab-stack',
+	 *     }
+	 * }
 	 */
-	function initialize( ?string $category_title = null ): void {
-		\wpinc\blok\initialize( $category_title );
+	function initialize( array $args = array() ): void {
+		\wpinc\blok\initialize( $args );
 	}
 
 	/**

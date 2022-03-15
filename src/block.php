@@ -4,7 +4,7 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2022-03-14
+ * @version 2022-03-15
  */
 
 namespace wpinc\blok;
@@ -14,16 +14,53 @@ require_once __DIR__ . '/assets/asset-url.php';
 /**
  * Initializes.
  *
- * @param string|null $category_title Title of added category.
+ * @param array $args {
+ *     Arguments.
+ *
+ *     @type string 'category_title' Title of added category.
+ *     @type array  'block-cards' {
+ *         Arguments for cards block.
+ *
+ *         @type string 'class_card' CSS class for card block. Default 'card-%d'.
+ *     }
+ *     @type array  'block-frame' {
+ *         Arguments for frame block.
+ *
+ *         @type string 'class_frame_normal' CSS class for normal frame. Default 'frame'.
+ *         @type string 'class_frame_alt'    CSS class for alt. frame. Default 'frame-alt'.
+ *     }
+ *     @type array  'block-tabs' {
+ *         Arguments for tabs block.
+ *
+ *         @type string 'class_tab_scroll' CSS class for tab scroll. Default 'tab-scroll',
+ *         @type string 'class_tab_stack'  CSS class for tab stack. Default 'tab-stack',
+ *     }
+ * }
  */
-function initialize( ?string $category_title = null ): void {
-	if ( null === $category_title ) {
-		$category_title = __( 'Custom', 'wpinc_blok' );
-	}
+function initialize( array $args = array() ): void {
+	// phpcs:disable
+	$args += array(
+		'category_title' => __( 'Custom', 'wpinc_blok' ),
+		'block-cards'    => array(),
+		'block-frame'    => array(),
+		'block-tabs'     => array(),
+	);
+	$args['block-cards'] += array(
+		'class_card' => 'card-%d',
+	);
+	$args['block-frame'] += array(
+		'class_frame_normal' => 'frame',
+		'class_frame_alt'    => 'frame-alt',
+	);
+	$args['block-tabs'] += array(
+		'class_tab_scroll' => 'tab-scroll',
+		'class_tab_stack'  => 'tab-stack',
+	);
+	// phpcs:enable
 	add_action(
 		'block_categories_all',
-		function ( $categories ) use ( $category_title ) {
-			return _cb_block_categories_all( $categories, $category_title );
+		function ( $categories ) use ( $args ) {
+			return _cb_block_categories_all( $args, $categories );
 		},
 		10
 	);
@@ -34,6 +71,9 @@ function initialize( ?string $category_title = null ): void {
 	foreach ( $blocks as $b ) {
 		register_block_type( __DIR__ . "/blocks/$b" );
 		wp_set_script_translations( "wpinc-$b-editor-script", 'wpinc', __DIR__ . '\languages' );
+		if ( isset( $args[ "block-$b" ] ) ) {
+			wp_localize_script( "wpinc-$b-editor-script", "wpinc_{$b}_args", $args[ "block-$b" ] );
+		}
 	}
 }
 
@@ -42,15 +82,15 @@ function initialize( ?string $category_title = null ): void {
  *
  * @access private
  *
+ * @param array   $args       Arguments.
  * @param array[] $categories Array of categories for block types.
- * @param string  $title      Title of added category.
  * @return array Categories.
  */
-function _cb_block_categories_all( array $categories, string $title ): array {
+function _cb_block_categories_all( array $args, array $categories ): array {
 	$cats = array(
 		array(
 			'slug'  => 'wpinc',
-			'title' => $title,
+			'title' => $args['category_title'],
 		),
 	);
 	return array_merge( $cats, $categories );
