@@ -8,7 +8,7 @@
 import { __ } from '@wordpress/i18n';
 import { BlockControls, InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import { Toolbar, ToolbarButton } from '@wordpress/components';
-import { registerBlockType } from '@wordpress/blocks';
+import { registerBlockType, createBlock } from '@wordpress/blocks';
 
 import './style.scss';
 import './editor.scss';
@@ -68,4 +68,29 @@ registerBlockType('wpinc/tabs', {
 	edit,
 	save,
 	icon: icon_block,
+	transforms: {
+		from: [
+			{
+				type: 'block',
+				blocks: ['core/group'],
+				transform: (attributes, innerBlocks) => {
+					return createBlock(
+						'wpinc/tabs', {}, innerBlocks
+					);
+				},
+			},
+		],
+		to: [
+			{
+				type: 'block',
+				blocks: ['core/group'],
+				transform: (attributes, innerBlocks) => {
+					return createBlock(
+						'core/group', {}, innerBlocks
+					);
+				},
+				priority: 90,
+			},
+		],
+	},
 });
