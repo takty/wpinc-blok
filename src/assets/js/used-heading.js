@@ -1,5 +1,5 @@
 /**
- * Heading filter
+ * Heading Filter
  *
  * @author Takuto Yanagida
  * @version 2022-03-15
