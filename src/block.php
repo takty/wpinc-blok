@@ -138,7 +138,26 @@ function set_used_heading( int $first_level = 2, int $count = 3 ): void {
 		$hs[] = "[aria-label=\"$h\"]";
 	}
 	$style = implode( ',', $hs ) . '{display:none;}';
-	wp_add_inline_style( 'wp-admin', $style );
+
+	add_action(
+		'admin_enqueue_scripts',
+		function () use ( $style, $first_level ) {
+			wp_add_inline_style( 'wp-admin', $style );
+
+			$url_to = untrailingslashit( \wpinc\get_file_uri( __DIR__ ) );
+			wp_enqueue_script(
+				'wpinc-blok-used-heading',
+				\wpinc\abs_url( $url_to, './assets/js/used-heading.min.js' ),
+				array( 'wp-compose', 'wp-element' ),
+				'1.0',
+				true
+			);
+			$ps = array(
+				'first_level' => $first_level,
+			);
+			wp_localize_script( 'wpinc-blok-used-heading', 'wpinc_blok_used_heading', $ps );
+		}
+	);
 }
 
 
