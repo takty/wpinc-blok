@@ -4,7 +4,7 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2022-03-15
+ * @version 2022-03-16
  */
 
 namespace wpinc\blok;
@@ -75,6 +75,27 @@ function initialize( array $args = array() ): void {
 			wp_localize_script( "wpinc-$b-editor-script", "wpinc_{$b}_args", $args[ "block-$b" ] );
 		}
 	}
+
+	// Add small tag button to the toolbar of heading blocks.
+	$url_to = untrailingslashit( \wpinc\get_file_uri( __DIR__ ) );
+	wp_enqueue_script(
+		'wpinc-blok-small-tag',
+		\wpinc\abs_url( $url_to, './assets/js/small-tag.min.js' ),
+		array( 'wp-compose', 'wp-element', 'wp-data', 'wp-element', 'wp-editor' ),
+		'1.0',
+		true
+	);
+	wp_set_script_translations( 'wpinc-blok-small-tag', 'wpinc', __DIR__ . '\languages' );
+
+	// Add list styles to the side panel of list blocks.
+	wp_enqueue_script(
+		'wpinc-blok-list-style',
+		\wpinc\abs_url( $url_to, './assets/js/list-style.min.js' ),
+		array( 'wp-compose', 'wp-element', 'wp-blocks', 'wp-i18n' ),
+		'1.0',
+		true
+	);
+	wp_set_script_translations( 'wpinc-blok-list-style', 'wpinc', __DIR__ . '\languages' );
 }
 
 /**
