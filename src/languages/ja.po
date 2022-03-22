@@ -1,7 +1,7 @@
 # Translation of Blok - Development in Japanese
 # @package Wpinc Blok
 # @author Takuto Yanagida
-# @version 2022-03-03
+# @version 2022-03-22
 
 # Block ------------------------------------------------------------------------
 
@@ -38,6 +38,9 @@ msgctxt "block description"
 msgid "Put the blocks together in a frame."
 msgstr "ブロックを枠にまとめます。"
 
+msgid "Alt."
+msgstr "別種"
+
 # Tabs -------------------------------------------------------------------------
 
 msgctxt "block title"
@@ -47,4 +50,3 @@ msgstr "タブ"
 msgctxt "block description"
 msgid "Headings are converted to tabs, and you can switch among contents by clicking on them. There are two ways to display tabs: 'scroll' and 'stack'."
 msgstr "見出しはタブに変換され、それをクリックすることによって、内容を切り替えられます。タブの表示方法には、スクロールとスタックの2種類があります。"
-

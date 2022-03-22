@@ -2,66 +2,34 @@
  * Frame block
  *
  * @author Takuto Yanagida
- * @version 2022-03-15
+ * @version 2022-03-22
  */
 
 import { __ } from '@wordpress/i18n';
-import { BlockControls, InnerBlocks, useBlockProps } from '@wordpress/block-editor';
-import { Toolbar, ToolbarButton } from '@wordpress/components';
+import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import { registerBlockType, createBlock } from '@wordpress/blocks';
+import { cloneElement } from '@wordpress/element';
 import { __experimentalConvert } from '@wordpress/block-library';
 
 import './style.scss';
 import './editor.scss';
 
-const icon        = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M32 35.5H9A3.5 3.5 0 0 1 5.5 32V9A3.5 3.5 0 0 1 9 5.5h23A3.5 3.5 0 0 1 35.5 9v23a3.5 3.5 0 0 1-3.5 3.5ZM9 8.5a.5.5 0 0 0-.5.5v23a.5.5 0 0 0 .5.5h23a.5.5 0 0 0 .5-.5V9a.5.5 0 0 0-.5-.5Z"/><path d="M37.5 43h-26v-3h26a2.5 2.5 0 0 0 2.5-2.5v-22h3v22a5.5 5.5 0 0 1-5.5 5.5Z"/></svg>;
-const icon_normal = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M35.5 39h-23A3.5 3.5 0 0 1 9 35.5v-23A3.5 3.5 0 0 1 12.5 9h23a3.5 3.5 0 0 1 3.5 3.5v23a3.5 3.5 0 0 1-3.5 3.5Zm-23-27a.5.5 0 0 0-.5.5v23a.5.5 0 0 0 .5.5h23a.5.5 0 0 0 .5-.5v-23a.5.5 0 0 0-.5-.5Z" /></svg>;
-const icon_alt    = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M36 39h-3.4a1.5 1.5 0 1 1 0-3H36v.08a1.5 1.5 0 0 1 0 2.84Zm-9.21 0h-2.9a1.5 1.5 0 0 1 0-3h2.9a1.5 1.5 0 0 1 0 3Zm-8.71 0h-2.9a1.5 1.5 0 0 1 0-3h2.9a1.5 1.5 0 0 1 0 3Zm-7.58-2A1.5 1.5 0 0 1 9 35.5v-2.9a1.5 1.5 0 0 1 3 0v2.9a1.5 1.5 0 0 1-1.5 1.5Zm27-2.69a1.5 1.5 0 0 1-1.5-1.5v-2.9a1.5 1.5 0 0 1 3 0v2.9a1.5 1.5 0 0 1-1.5 1.5Zm-27-6.02A1.5 1.5 0 0 1 9 26.8v-2.9a1.5 1.5 0 0 1 3 0v2.9a1.5 1.5 0 0 1-1.5 1.5Zm27-2.7a1.5 1.5 0 0 1-1.5-1.5v-2.9a1.5 1.5 0 0 1 3 0v2.9a1.5 1.5 0 0 1-1.5 1.5Zm-27-6a1.5 1.5 0 0 1-1.5-1.5v-2.91a1.5 1.5 0 0 1 3 0v2.9a1.5 1.5 0 0 1-1.5 1.5Zm27-2.7a1.5 1.5 0 0 1-1.5-1.5V12.5a1.5 1.5 0 0 1 1.5-1.5 1.5 1.5 0 0 1 1.5 1.48v2.9a1.5 1.5 0 0 1-1.5 1.5ZM32.82 12h-2.9a1.5 1.5 0 0 1 0-3h2.9a1.5 1.5 0 0 1 0 3Zm-8.72 0h-2.9a1.5 1.5 0 0 1 0-3h2.9a1.5 1.5 0 0 1 0 3Zm-8.7 0h-2.9a1.5 1.5 0 1 1-.01-3h2.9a1.5 1.5 0 1 1 0 3Z"/></svg>;
+const icon = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M32 35.5H9A3.5 3.5 0 0 1 5.5 32V9A3.5 3.5 0 0 1 9 5.5h23A3.5 3.5 0 0 1 35.5 9v23a3.5 3.5 0 0 1-3.5 3.5ZM9 8.5a.5.5 0 0 0-.5.5v23a.5.5 0 0 0 .5.5h23a.5.5 0 0 0 .5-.5V9a.5.5 0 0 0-.5-.5Z"/><path d="M37.5 43h-26v-3h26a2.5 2.5 0 0 0 2.5-2.5v-22h3v22a5.5 5.5 0 0 1-5.5 5.5Z"/></svg>;
+const cls  = window?.wpinc_frame_args?.class_frame ?? 'frame';
 
-const cls_normal = window?.wpinc_frame_args?.class_frame_normal ?? 'frame';
-const cls_alt    = window?.wpinc_frame_args?.class_frame_alt    ?? 'frame-alt';
-
-function edit({ attributes, setAttributes }) {
-	const { type } = attributes;
-	const setType  = type => setAttributes({ type });
-
-	const label      = __('normal' === type ? 'Frame [Normal]' : 'Frame [Alt.]', 'wpinc');
-	const blockProps = useBlockProps({
-		className: 'normal' === type ? cls_normal : cls_alt
-	});
+function edit() {
+	const label      = __('Frame', 'wpinc');
+	const blockProps = useBlockProps({ className: cls });
 
 	return (
 		<div data-container-label={label} {...blockProps}>
-			{
-				<BlockControls>
-					<Toolbar>
-						<ToolbarButton
-							isActive = {'normal' === type}
-							onClick  = {() => setType('normal')}
-							icon     = {icon_normal}
-							label    = {__('Normal', 'wpinc')}
-						/>
-						<ToolbarButton
-							isActive = {'alt' === type}
-							onClick  = {() => setType('alt')}
-							icon     = {icon_alt}
-							label    = {__('Alt.', 'wpinc')}
-						/>
-					</Toolbar>
-				</BlockControls>
-			}
 			<InnerBlocks />
 		</div>
 	);
 }
 
-function save({ attributes }) {
-	const { type } = attributes;
-
-	const blockProps = useBlockProps.save({
-		className: 'normal' === type ? cls_normal : cls_alt
-	});
-
+function save() {
+	const blockProps = useBlockProps.save({ className: cls });
 	return (
 		<div {...blockProps}>
 			<InnerBlocks.Content />
@@ -110,9 +78,33 @@ const transforms = {
 	],
 };
 
-registerBlockType('wpinc/frame', {
-	edit,
-	save,
-	icon,
-	transforms,
-});
+registerBlockType('wpinc/frame', { edit, save, icon, transforms });
+
+
+// -----------------------------------------------------------------------------
+
+
+const removeDefault = (element, blockType, attributes) => {
+	if ('wpinc/frame' === blockType.name) {
+		if ('is-style-default' === attributes.className) {
+			return cloneElement(element, { className: cls });
+		}
+	}
+	return element;
+}
+
+wp.hooks.addFilter(
+	'blocks.getSaveElement',
+	'wpinc/blok/frame_filter_remove_default',
+	removeDefault
+);
+
+
+// -----------------------------------------------------------------------------
+
+
+wp.blocks.registerBlockStyle( 'wpinc/frame', {
+	name     : 'default',
+	label    : __('Default', 'wpinc'),
+	isDefault: true,
+} );

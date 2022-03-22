@@ -7,17 +7,11 @@
                 "plural_forms": "nplurals=1; plural=0;",
                 "lang": "ja"
             },
-            "Frame [Normal]": [
-                "枠 [標準]"
+            "Frame": [
+                "枠"
             ],
-            "Frame [Alt.]": [
-                "枠 [別]"
-            ],
-            "Normal": [
-                "標準"
-            ],
-            "Alt.": [
-                "別"
+            "Default": [
+                "デフォルト"
             ]
         }
     }

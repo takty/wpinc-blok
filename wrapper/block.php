@@ -27,8 +27,8 @@ namespace sample {
 	 *     @type array  'block-frame' {
 	 *         Arguments for frame block.
 	 *
-	 *         @type string 'class_frame_normal' CSS class for normal frame. Default 'frame'.
-	 *         @type string 'class_frame_alt'    CSS class for alt. frame. Default 'frame-alt'.
+	 *         @type string 'class_frame' CSS class for frame. Default 'frame'.
+	 *         @type string 'styles'      Name to label array of styles.
 	 *     }
 	 *     @type array  'block-tabs' {
 	 *         Arguments for tabs block.

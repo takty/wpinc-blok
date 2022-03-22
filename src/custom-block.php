@@ -4,7 +4,7 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2022-03-21
+ * @version 2022-03-22
  */
 
 namespace wpinc\blok;
@@ -18,18 +18,18 @@ require_once __DIR__ . '/assets/asset-url.php';
  *     Arguments.
  *
  *     @type string 'category_title' Title of added category.
- *     @type array  'block-cards' {
+ *     @type array  'block_cards' {
  *         Arguments for cards block.
  *
  *         @type string 'class_card' CSS class for card block. Default 'card-%d'.
  *     }
- *     @type array  'block-frame' {
+ *     @type array  'block_frame' {
  *         Arguments for frame block.
  *
- *         @type string 'class_frame_normal' CSS class for normal frame. Default 'frame'.
- *         @type string 'class_frame_alt'    CSS class for alt. frame. Default 'frame-alt'.
+ *         @type string 'class_frame' CSS class for frame. Default 'frame'.
+ *         @type string 'styles'      Name to label array of styles.
  *     }
- *     @type array  'block-tabs' {
+ *     @type array  'block_tabs' {
  *         Arguments for tabs block.
  *
  *         @type string 'class_tab_scroll' CSS class for tab scroll. Default 'tab-scroll',
@@ -41,18 +41,20 @@ function register_custom_blocks( array $args = array() ): void {
 	// phpcs:disable
 	$args += array(
 		'category_title' => __( 'Custom', 'wpinc_blok' ),
-		'block-cards'    => array(),
-		'block-frame'    => array(),
-		'block-tabs'     => array(),
+		'block_cards'    => array(),
+		'block_frame'    => array(),
+		'block_tabs'     => array(),
 	);
-	$args['block-cards'] += array(
+	$args['block_cards'] += array(
 		'class_card' => 'card-%d',
 	);
-	$args['block-frame'] += array(
-		'class_frame_normal' => 'frame',
-		'class_frame_alt'    => 'frame-alt',
+	$args['block_frame'] += array(
+		'class_frame' => 'frame',
+		'styles'      => array(
+			'alt' => __( 'Alt.', 'wpinc_blok' ),
+		),
 	);
-	$args['block-tabs'] += array(
+	$args['block_tabs'] += array(
 		'class_tab_scroll' => 'tab-scroll',
 		'class_tab_stack'  => 'tab-stack',
 	);
@@ -66,9 +68,18 @@ function register_custom_blocks( array $args = array() ): void {
 	foreach ( $blocks as $b ) {
 		register_block_type( __DIR__ . "/blocks/$b" );
 		wp_set_script_translations( "wpinc-$b-editor-script", 'wpinc', __DIR__ . '\languages' );
-		if ( isset( $args[ "block-$b" ] ) ) {
-			wp_localize_script( "wpinc-$b-editor-script", "wpinc_{$b}_args", $args[ "block-$b" ] );
+		if ( isset( $args[ "block_$b" ] ) ) {
+			wp_localize_script( "wpinc-$b-editor-script", "wpinc_{$b}_args", $args[ "block_$b" ] );
 		}
+	}
+	foreach ( $args['block_frame']['styles'] as $name => $label ) {
+		register_block_style(
+			'wpinc/frame',
+			array(
+				'name'  => $name,
+				'label' => $label,
+			)
+		);
 	}
 }
 
