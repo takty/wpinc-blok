@@ -2,13 +2,13 @@
  * Cards block
  *
  * @author Takuto Yanagida
- * @version 2022-03-15
+ * @version 2022-03-24
  */
 
 import { __ } from '@wordpress/i18n';
 import { BlockControls, InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import { Toolbar, ToolbarButton } from '@wordpress/components';
-import { registerBlockType } from '@wordpress/blocks';
+import { registerBlockType, createBlock, rawHandler } from '@wordpress/blocks';
 
 import './style.scss';
 import './editor.scss';
@@ -74,8 +74,26 @@ function save({ attributes }) {
 	);
 }
 
-registerBlockType('wpinc/cards', {
-	edit,
-	save,
-	icon,
-});
+const transforms = {
+	from: [
+		{
+			type     : 'raw',
+			selector : 'div.column-2, div.column-3, div.column-4',
+			transform: node => {
+				const cards = [];
+
+				const ds = node.querySelectorAll(':scope > div');
+				for (const d of ds) {
+					cards.push(createBlock('wpinc/card', {}, rawHandler({ HTML: d.innerHTML })));
+				}
+				let number = 2;
+				if (node.classList.contains('column-3')) number = 3;
+				if (node.classList.contains('column-4')) number = 4;
+
+				return createBlock('wpinc/cards', { number }, cards);
+			},
+		}
+	],
+};
+
+registerBlockType('wpinc/cards', { edit, save, icon, transforms });

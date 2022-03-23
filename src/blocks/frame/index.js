@@ -2,12 +2,12 @@
  * Frame block
  *
  * @author Takuto Yanagida
- * @version 2022-03-22
+ * @version 2022-03-24
  */
 
 import { __ } from '@wordpress/i18n';
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
-import { registerBlockType, createBlock } from '@wordpress/blocks';
+import { registerBlockType, createBlock, rawHandler } from '@wordpress/blocks';
 import { cloneElement } from '@wordpress/element';
 import { __experimentalConvert } from '@wordpress/block-library';
 
@@ -63,6 +63,20 @@ const transforms = {
 				return createBlock('wpinc/frame', {}, groupInnerBlocks);
 			},
 		},
+		{
+			type     : 'raw',
+			selector : 'div.frame, div.frame-alt',
+			transform: node => {
+				const innerBlocks = rawHandler({
+					HTML: node.innerHTML,
+				});
+				let cn = null;
+				if (node.classList.contains('frame-alt')) {
+					cn = 'is-style-alt';
+				}
+				return createBlock('wpinc/frame', { className: cn }, innerBlocks);
+			},
+		}
 	],
 	to: [
 		{

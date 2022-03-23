@@ -2,13 +2,13 @@
  * Tabs block
  *
  * @author Takuto Yanagida
- * @version 2022-03-15
+ * @version 2022-03-24
  */
 
 import { __ } from '@wordpress/i18n';
 import { BlockControls, InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import { Toolbar, ToolbarButton } from '@wordpress/components';
-import { registerBlockType, createBlock } from '@wordpress/blocks';
+import { registerBlockType, createBlock, rawHandler } from '@wordpress/blocks';
 import { __experimentalConvert } from '@wordpress/block-library';
 
 import './style.scss';
@@ -91,6 +91,20 @@ const transforms = {
 				return createBlock('wpinc/tabs', {}, groupInnerBlocks);
 			},
 		},
+		{
+			type     : 'raw',
+			selector : 'div.tab-page, div.pseudo-tab-page, div.tab-scroll, div.tab-stack',
+			transform: node => {
+				const innerBlocks = rawHandler({
+					HTML: node.innerHTML,
+				});
+				let type = 'scroll';
+				if (node.classList.contains('tab-page') || node.classList.contains('tab-stack')) {
+					type = 'stack';
+				}
+				return createBlock('wpinc/tabs', { type }, innerBlocks);
+			},
+		}
 	],
 	to: [
 		{
@@ -104,9 +118,4 @@ const transforms = {
 	],
 };
 
-registerBlockType('wpinc/tabs', {
-	edit,
-	save,
-	icon,
-	transforms,
-});
+registerBlockType('wpinc/tabs', { edit, save, icon, transforms });
