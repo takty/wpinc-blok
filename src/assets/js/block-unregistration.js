@@ -2,22 +2,30 @@
  * Block Unregistration
  *
  * @author Takuto Yanagida
- * @version 2022-03-15
+ * @version 2022-06-28
  */
 
 wp.domReady(function () {
-	const types           = window?.wpinc_blok_unregistration?.types ?? [];
-	const categories      = window?.wpinc_blok_unregistration?.categories ?? [];
+	const types           = window?.wpinc_blok_unregistration?.types           ?? [];
+	const categories      = window?.wpinc_blok_unregistration?.categories      ?? [];
 	const type_variations = window?.wpinc_blok_unregistration?.type_variations ?? {};
-	const type_styles     = window?.wpinc_blok_unregistration?.type_styles ?? {};
+	const type_styles     = window?.wpinc_blok_unregistration?.type_styles     ?? {};
+
+	const origTypes     = wp.blocks.getBlockTypes();
+	const origTypeNames = new Set();
+	for (const t of origTypes) {
+		origTypeNames.add(t.name);
+	}
 
 	for (const t of types) {
-		wp.blocks.unregisterBlockType(t);
+		if (origTypeNames.has(t.name)) {
+			wp.blocks.unregisterBlockType(t);
+		}
 	}
 	const cs = new Set(categories);
-	for (const b of wp.blocks.getBlockTypes()) {
-		if (cs.has(b.category)) {
-			wp.blocks.unregisterBlockType(b.name);
+	for (const t of origTypes) {
+		if (cs.has(t.category)) {
+			wp.blocks.unregisterBlockType(t.name);
 		}
 	}
 	for (const [t, vs] of Object.entries(type_variations)) {
