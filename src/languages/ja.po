@@ -1,12 +1,14 @@
 # Translation of Blok - Development in Japanese
 # @package Wpinc Blok
 # @author Takuto Yanagida
-# @version 2022-03-22
+# @version 2022-08-01
 
 # Block ------------------------------------------------------------------------
 
 msgid "Custom"
 msgstr "カスタム"
+msgid "Accent"
+msgstr "アクセント"
 
 # Card -------------------------------------------------------------------------
 

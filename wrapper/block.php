@@ -4,7 +4,7 @@
  *
  * @package Sample
  * @author Takuto Yanagida
- * @version 2022-03-21
+ * @version 2022-08-01
  */
 
 namespace sample {
@@ -40,6 +40,13 @@ namespace sample {
 	 */
 	function register_custom_blocks( array $args = array() ): void {
 		\wpinc\blok\register_custom_blocks( $args );
+	}
+
+	/**
+	 * Registers custom styles.
+	 */
+	function register_custom_styles(): void {
+		\wpinc\blok\register_custom_styles();
 	}
 
 
