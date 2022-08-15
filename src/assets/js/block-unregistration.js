@@ -2,7 +2,7 @@
  * Block Unregistration
  *
  * @author Takuto Yanagida
- * @version 2022-06-28
+ * @version 2022-08-15
  */
 
 wp.domReady(function () {
@@ -12,14 +12,11 @@ wp.domReady(function () {
 	const type_styles     = window?.wpinc_blok_unregistration?.type_styles     ?? {};
 
 	const origTypes     = wp.blocks.getBlockTypes();
-	const origTypeNames = new Set();
-	for (const t of origTypes) {
-		origTypeNames.add(t.name);
-	}
 
-	for (const t of types) {
-		if (origTypeNames.has(t.name)) {
-			wp.blocks.unregisterBlockType(t);
+	const ts = new Set(types);
+	for (const t of origTypes) {
+		if (ts.has(t.name)) {
+			wp.blocks.unregisterBlockType(t.name);
 		}
 	}
 	const cs = new Set(categories);

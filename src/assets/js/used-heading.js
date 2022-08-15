@@ -2,22 +2,22 @@
  * Heading Filter
  *
  * @author Takuto Yanagida
- * @version 2022-03-15
+ * @version 2022-08-08
  *
  * Based on https://github.com/WordPress/gutenberg/issues/15160
  */
 
-((wp) => {
+(wp => {
 	const {
 		compose: { createHigherOrderComponent },
 		element: { createElement },
 	} = wp;
 	const el = createElement;
 
-	const first_level  = window?.wpinc_blok_used_header?.first_level ?? 3;
+	const firstLevel   = window?.wpinc_blok_used_header?.first_level ?? 3;
 	const targetBlocks = ['core/heading'];
 
-	const filter = createHigherOrderComponent(BlockEdit => {
+	const restrictHeadingLevel = createHigherOrderComponent(BlockEdit => {
 		return props => {
 			if (!targetBlocks.includes(props.name)) {
 				return el(BlockEdit, props);
@@ -26,16 +26,16 @@
 				...props,
 				attributes: {
 					...props.attributes,
-					level: Math.max(first_level, props.attributes.level),
+					level: Math.max(firstLevel, props.attributes.level),
 				},
 			};
 			return el(BlockEdit, newProps);
 		};
-	}, 'withFiltered');
+	}, 'restrictHeadingLevel');
 
 	wp.hooks.addFilter(
 		'editor.BlockEdit',
-		'wpinc/blok/heading_filter',
-		filter
+		'wpinc/blok/restrict-heading-level',
+		restrictHeadingLevel
 	);
 })(window.wp);
