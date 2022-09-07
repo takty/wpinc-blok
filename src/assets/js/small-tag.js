@@ -2,18 +2,18 @@
  * Small Tag
  *
  * @author Takuto Yanagida
- * @version 2022-03-16
+ * @version 2022-09-07
  *
  * Based on https://webomnizz.com/gutenberg-editor-add-button-to-the-toolbar/
  */
 
 ((wp) => {
 	const {
-		i18n   : { __ },
-		compose: { ifCondition, compose },
-		element: { createElement },
-		data   : { withSelect },
-		editor : { RichTextToolbarButton },
+		i18n       : { __ },
+		compose    : { ifCondition, compose },
+		element    : { createElement },
+		data       : { withSelect },
+		blockEditor: { RichTextToolbarButton },
 		richText,
 	} = wp;
 	const el = createElement;
