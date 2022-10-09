@@ -82,4 +82,5 @@ module.exports = [
 	buildBlockConfig('cards'),
 	buildBlockConfig('frame'),
 	buildBlockConfig('tabs'),
+	buildBlockConfig('field'),
 ];

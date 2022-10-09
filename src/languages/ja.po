@@ -1,12 +1,13 @@
 # Translation of Blok - Development in Japanese
 # @package Wpinc Blok
 # @author Takuto Yanagida
-# @version 2022-08-01
+# @version 2022-10-08
 
 # Block ------------------------------------------------------------------------
 
 msgid "Custom"
 msgstr "カスタム"
+
 msgid "Accent"
 msgstr "アクセント"
 
@@ -52,3 +53,13 @@ msgstr "タブ"
 msgctxt "block description"
 msgid "Headings are converted to tabs, and you can switch among contents by clicking on them. There are two ways to display tabs: 'scroll' and 'stack'."
 msgstr "見出しはタブに変換され、それをクリックすることによって、内容を切り替えられます。タブの表示方法には、スクロールとスタックの2種類があります。"
+
+# Field ------------------------------------------------------------------------
+
+msgctxt "block title"
+msgid "Field"
+msgstr "入力欄"
+
+msgctxt "block description"
+msgid "Store blocks in specific custom fields."
+msgstr "ブロックを特定のカスタムフィールドに保存します。"
