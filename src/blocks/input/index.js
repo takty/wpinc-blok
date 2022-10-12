@@ -24,14 +24,14 @@ const label = __('Items', 'wpinc');
 const es    = window?.wpinc_input_args?.entries ?? [];
 
 function edit({ attributes, setAttributes }) {
-	let { key }  = attributes;
-	const setKey = k => setAttributes({ key: (key = k) });
+	const { key } = attributes;
+	const setKey  = key => setAttributes({ key });
 	if (!key && es.length) setKey(es[0].key);
 
-	const pt                = useSelect(s => s('core/editor').getCurrentPostType(), []);
-	const [ meta, setMeta ] = useEntityProp('postType', pt, 'meta');
-	const metaVal           = meta[key];
-	const updateMetaVal     = (k, v) => setMeta({ ...meta, [k]: v });
+	const pt              = useSelect(s => s('core/editor').getCurrentPostType(), []);
+	const [meta, setMeta] = useEntityProp('postType', pt, 'meta');
+	const metaVal         = meta[key];
+	const updateMeta      = (k, v) => setMeta({ ...meta, [k]: v });
 
 	const keyLabel   = es.filter(e => e.key === key)[0]?.label ?? label;
 	const blockProps = useBlockProps({ className: `input-${key}` });
@@ -58,7 +58,7 @@ function edit({ attributes, setAttributes }) {
 			<TextControl
 				label               = {keyLabel}
 				value               = {metaVal}
-				onChange            = {v => updateMetaVal(key, v)}
+				onChange            = {v => updateMeta(key, v)}
 				hideLabelFromVision = {true}
 			/>
 		</div>
