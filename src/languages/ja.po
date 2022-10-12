@@ -1,7 +1,7 @@
 # Translation of Blok - Development in Japanese
 # @package Wpinc Blok
 # @author Takuto Yanagida
-# @version 2022-10-08
+# @version 2022-10-12
 
 # Block ------------------------------------------------------------------------
 
@@ -58,8 +58,18 @@ msgstr "見出しはタブに変換され、それをクリックすることに
 
 msgctxt "block title"
 msgid "Field"
-msgstr "入力欄"
+msgstr "入力エリア"
 
 msgctxt "block description"
 msgid "Store blocks in specific custom fields."
 msgstr "ブロックを特定のカスタムフィールドに保存します。"
+
+# Input ------------------------------------------------------------------------
+
+msgctxt "block title"
+msgid "Input"
+msgstr "入力欄"
+
+msgctxt "block description"
+msgid "Store text in specific custom fields."
+msgstr "テキストを特定のカスタムフィールドに保存します。"

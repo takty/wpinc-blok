@@ -83,4 +83,5 @@ module.exports = [
 	buildBlockConfig('frame'),
 	buildBlockConfig('tabs'),
 	buildBlockConfig('field'),
+	buildBlockConfig('input'),
 ];

@@ -17,7 +17,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.19.3",
-		"@babel/preset-env": "^7.19.3",
+		"@babel/preset-env": "^7.19.4",
 		"@wordpress/block-library": "6.0.28",
 		"@wordpress/scripts": "19.2.4",
 		"copy-webpack-plugin": "^11.0.0",
