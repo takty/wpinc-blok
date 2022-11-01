@@ -4,7 +4,7 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2022-10-12
+ * @version 2022-11-01
  */
 
 namespace wpinc\blok\input;
@@ -22,17 +22,14 @@ require_once __DIR__ . '/assets/admin-current-post.php';
  *     @type string 'label'     Label of the post meta.
  *     @type string 'post_type' Target post type.
  * }
+ * @return bool True if the meta key was successfully registered, false if not.
  */
-function add_block( array $args = array() ): void {
+function add_block( array $args = array() ): bool {
 	_register_block();
 
-	// phpcs:disable
-	$args += array(
-		'key'       => '',
-		'label'     => '',
-		'post_type' => '*',
-	);
-	// phpcs:enable
+	if ( empty( $args['key'] ) || empty( $args['label'] ) || empty( $args['post_type'] ) ) {
+		return false;
+	}
 
 	$inst = _get_instance();
 	if ( ! isset( $args['post_type'] ) ) {
@@ -41,6 +38,20 @@ function add_block( array $args = array() ): void {
 	$inst->pt_entries[ $args['post_type'] ][] = array(
 		'key'   => $args['key'],
 		'label' => $args['label'],
+	);
+
+	return register_post_meta(
+		$args['post_type'],
+		$args['key'],
+		array(
+			'type'          => 'string',
+			'single'        => true,
+			'show_in_rest'  => true,
+			'auth_callback' => function () {
+				// For support for private fields.
+				return current_user_can( 'edit_posts' );
+			},
+		)
 	);
 }
 
@@ -57,13 +68,17 @@ function _register_block(): void {
 	$do_once = true;
 	\wpinc\initialize_theme_plugin_url();
 
-	add_action( 'init', '\wpinc\blok\input\_cb_init' );
+	if ( did_action( 'widgets_init' ) ) {
+		_cb_widgets_init();
+	} else {
+		add_action( 'widgets_init', '\wpinc\blok\input\_cb_widgets_init' );
+	}
 }
 
 /**
- * Callback function for 'init' hook.
+ * Callback function for 'widgets_init' hook.
  */
-function _cb_init() {
+function _cb_widgets_init() {
 	$post_type = \wpinc\get_admin_post_type();
 	if ( ! $post_type ) {
 		return;
@@ -78,18 +93,6 @@ function _cb_init() {
 
 		wp_set_script_translations( 'wpinc-input-editor-script', 'wpinc', __DIR__ . '\languages' );
 		wp_localize_script( 'wpinc-input-editor-script', 'wpinc_input_args', array( 'entries' => $fes ) );
-
-		foreach ( $fes as $fe ) {
-			register_post_meta(
-				$post_type,
-				$fe['key'],
-				array(
-					'type'         => 'string',
-					'single'       => true,
-					'show_in_rest' => true,
-				)
-			);
-		}
 	}
 }
 
@@ -106,11 +109,6 @@ function _get_target_entries( string $post_type ): array {
 	$fes  = array();
 	if ( isset( $inst->pt_entries[ $post_type ] ) ) {
 		foreach ( $inst->pt_entries[ $post_type ] as $e ) {
-			$fes[] = $e;
-		}
-	}
-	if ( isset( $inst->pt_entries['*'] ) ) {
-		foreach ( $inst->pt_entries['*'] as $e ) {
 			$fes[] = $e;
 		}
 	}
