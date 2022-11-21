@@ -5,6 +5,9 @@
 	"author": "Takuto Yanagida",
 	"license": "MIT",
 	"scripts": {
+		"postinstall:gulp": "gulp build",
+		"postinstall:wp": "wp-scripts build",
+		"postinstall": "run-p postinstall:*",
 		"build": "wp-scripts build",
 		"format": "wp-scripts format",
 		"lint:css": "wp-scripts lint-style",
