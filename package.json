@@ -7,7 +7,7 @@
 	"scripts": {
 		"postinstall:gulp": "gulp build",
 		"postinstall:wp": "wp-scripts build",
-		"postinstall": "run-p postinstall:*",
+		"postinstall": "npm run postinstall:gulp & npm run postinstall:wp",
 		"build": "wp-scripts build",
 		"format": "wp-scripts format",
 		"lint:css": "wp-scripts lint-style",
