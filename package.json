@@ -18,9 +18,9 @@
 		"start:wp": "wp-scripts start",
 		"start": "run-p start:*"
 	},
-	"devDependencies": {
-		"@babel/core": "^7.19.6",
-		"@babel/preset-env": "^7.19.4",
+	"dependencies": {
+		"@babel/core": "^7.20.5",
+		"@babel/preset-env": "^7.20.2",
 		"@wordpress/block-library": "6.0.28",
 		"@wordpress/scripts": "19.2.4",
 		"copy-webpack-plugin": "^11.0.0",
@@ -29,7 +29,6 @@
 		"gulp-babel": "^8.0.0",
 		"gulp-changed": "^4.0.3",
 		"gulp-ignore": "^3.0.0",
-		"gulp-load-plugins": "^2.0.8",
 		"gulp-plumber": "^1.2.1",
 		"gulp-preprocess": "^4.0.2",
 		"gulp-rename": "^2.0.0",
