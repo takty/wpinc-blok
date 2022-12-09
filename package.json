@@ -16,12 +16,16 @@
 		"start:wp": "wp-scripts start",
 		"start": "run-p start:*"
 	},
-	"dependencies": {
-		"@babel/core": "^7.20.5",
-		"@babel/preset-env": "^7.20.2",
+	"devDependencies": {
 		"@wordpress/block-library": "6.0.28",
 		"@wordpress/scripts": "19.2.4",
 		"copy-webpack-plugin": "^11.0.0",
+		"npm-run-all": "^4.1.5",
+		"remove-files-webpack-plugin": "^1.5.0"
+	},
+	"dependencies": {
+		"@babel/core": "^7.20.5",
+		"@babel/preset-env": "^7.20.2",
 		"gettext-parser": "^6.0.0",
 		"gulp": "^4.0.2",
 		"gulp-babel": "^8.0.0",
@@ -30,8 +34,6 @@
 		"gulp-plumber": "^1.2.1",
 		"gulp-preprocess": "^4.0.2",
 		"gulp-rename": "^2.0.0",
-		"gulp-terser": "^2.1.0",
-		"npm-run-all": "^4.1.5",
-		"remove-files-webpack-plugin": "^1.5.0"
+		"gulp-terser": "^2.1.0"
 	}
 }
