@@ -2,14 +2,14 @@
  * Gulp file
  *
  * @author Takuto Yanagida
- * @version 2022-12-09
+ * @version 2023-06-23
  */
 
 const SRC_JS    = ['src/assets/**/*.js', '!src/assets/**/*.min.js'];
 const SRC_PHP   = ['src/**/*.php', '!src/blocks/**/*.php'];
 const SRC_PO    = ['src/languages/**/*.po', '!src/languages/**/wpinc-*.po'];
 const SRC_JSON  = ['src/languages/**/*.json'];
-const SRC_BLOCK = 'src/blocks/_build/**';
+const SRC_BLOCK = 'temp/blocks/**';
 const DEST      = './dist';
 
 import gulp from 'gulp';
@@ -22,7 +22,7 @@ const js    = makeJsTask(SRC_JS, DEST, 'src');
 const php   = makeCopyTask(SRC_PHP, DEST);
 const po    = makeLocaleTask(SRC_PO, DEST, 'src');
 const json  = makeCopyTask(SRC_JSON, DEST, 'src');
-const block = makeCopyTask(SRC_BLOCK, DEST + '/blocks', 'src/blocks/_build');
+const block = makeCopyTask(SRC_BLOCK, DEST + '/blocks', 'temp/blocks');
 
 const watch = done => {
 	gulp.watch(SRC_JS, js);

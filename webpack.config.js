@@ -53,21 +53,21 @@ const buildBlockConfig = (block_name) => buildConfig(
 			// This block's built assets should be output to `./dist/{block name}/`.
 			output: {
 				...config.output,
-				path: path.resolve(process.cwd(), 'src', 'blocks', '_build', block_name),
+				path: path.resolve(process.cwd(), 'temp', 'blocks', block_name),
 			},
 			// Add a CopyWebpackPlugin to copy over the `block.json` file.
 			plugins: [
 				new CopyPlugin({
 					patterns: [
 						{
-							from: `src/blocks/${block_name}/block.json`
+							from: `src/blocks/${block_name}/block.json`,
 						},
 					],
 				}),
 				new RemovePlugin({
 					after: {
 						include: [
-							`src/blocks/_build/${block_name}/blocks`,
+							`temp/blocks/${block_name}/blocks`,
 						],
 					}
 				}),
