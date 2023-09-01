@@ -4,7 +4,7 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2022-09-07
+ * @version 2023-08-30
  */
 
 namespace wpinc\blok;
@@ -178,7 +178,7 @@ function _filter_block_attributes( string $doc, string $name, callable $fn ): st
  * @param string   $name   Block name.
  * @param callable $fn     Function for filtering attributes.
  * @param int      $offset Offset index.
- * @return array Array of modified document and new offset index.
+ * @return array{string, int} Array of modified document and new offset index.
  */
 function _next_block( string $doc, string $name, callable $fn, int $offset ): array {
 	$ms  = null;

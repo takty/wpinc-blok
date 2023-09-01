@@ -4,7 +4,7 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2022-10-12
+ * @version 2023-09-01
  */
 
 namespace wpinc\blok;
@@ -14,7 +14,7 @@ require_once __DIR__ . '/assets/theme-plugin-url.php';
 /**
  * Registers custom blocks.
  *
- * @param array $args {
+ * @param array<string, mixed> $args {
  *     Arguments.
  *
  *     @type string 'category_title' Title of added category.
@@ -78,7 +78,7 @@ function register_custom_blocks( array $args = array() ): void {
 				register_block_type_from_metadata( __DIR__ . "/blocks/$b" );  // Must use 'register_block_type_from_metadata' instead of 'register_block_type' for WP 5.7.
 				wp_set_script_translations( "wpinc-$b-editor-script", 'wpinc', __DIR__ . '\languages' );
 				if ( isset( $args[ "block_$b" ] ) ) {
-					wp_localize_script( "wpinc-$b-editor-script", "wpinc_{$b}_args", $args[ "block_$b" ] );
+					wp_localize_script( "wpinc-$b-editor-script", "wpinc_{$b}_args", (array) $args[ "block_$b" ] );
 				}
 			}
 		}
@@ -99,9 +99,9 @@ function register_custom_blocks( array $args = array() ): void {
  *
  * @access private
  *
- * @param array   $args       Arguments.
- * @param array[] $categories Array of categories for block types.
- * @return array Categories.
+ * @param array<string, mixed>   $args       Arguments.
+ * @param array<string, mixed>[] $categories Array of categories for block types.
+ * @return array<string, mixed>[] Categories.
  */
 function _cb_block_categories_all( array $args, array $categories ): array {
 	$cats = array(

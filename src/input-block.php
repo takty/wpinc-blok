@@ -4,7 +4,7 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2022-11-01
+ * @version 2023-08-30
  */
 
 namespace wpinc\blok\input;
@@ -15,7 +15,7 @@ require_once __DIR__ . '/assets/admin-current-post.php';
 /**
  * Adds input block.
  *
- * @param array $args {
+ * @param array<string, string> $args {
  *     Arguments.
  *
  *     @type string 'key'       Key of post meta.
@@ -30,18 +30,19 @@ function add_block( array $args = array() ): bool {
 	if ( empty( $args['key'] ) || empty( $args['label'] ) || empty( $args['post_type'] ) ) {
 		return false;
 	}
+	$pt = $args['post_type'];
 
 	$inst = _get_instance();
-	if ( ! isset( $args['post_type'] ) ) {
-		$inst->pt_entries[ $args['post_type'] ] = array();
+	if ( ! isset( $inst->pt_entries[ $pt ] ) ) {
+		$inst->pt_entries[ $pt ] = array();
 	}
-	$inst->pt_entries[ $args['post_type'] ][] = array(
+	$inst->pt_entries[ $pt ][] = array(
 		'key'   => $args['key'],
 		'label' => $args['label'],
 	);
 
 	return register_post_meta(
-		$args['post_type'],
+		$pt,
 		$args['key'],
 		array(
 			'type'          => 'string',
@@ -78,7 +79,7 @@ function _register_block(): void {
 /**
  * Callback function for 'widgets_init' hook.
  */
-function _cb_widgets_init() {
+function _cb_widgets_init(): void {
 	$post_type = \wpinc\get_admin_post_type();
 	if ( ! $post_type ) {
 		return;
@@ -102,7 +103,7 @@ function _cb_widgets_init() {
  * @access private
  *
  * @param string $post_type Post type.
- * @return array Entries.
+ * @return array<string, string>[] Entries.
  */
 function _get_target_entries( string $post_type ): array {
 	$inst = _get_instance();
@@ -131,7 +132,7 @@ function _get_instance(): object {
 		/**
 		 * Array of post type to entries.
 		 *
-		 * @var array
+		 * @var array<string, array<string, string>[]>
 		 */
 		public $pt_entries = array();
 	};

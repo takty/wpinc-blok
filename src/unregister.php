@@ -4,7 +4,7 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2022-09-07
+ * @version 2023-09-01
  */
 
 namespace wpinc\blok;
@@ -19,7 +19,7 @@ require_once __DIR__ . '/assets/asset-url.php';
  */
 function unregister_block_type( $type_s, ?string $url_to = null ): void {
 	$inst = _get_unregistered_blocks();
-	$ts   = is_array( $type_s ) ? $type_s : array( $type_s );
+	$ts   = (array) $type_s;
 
 	$inst->types = array_merge( $inst->types, $ts );
 	_enqueue_script_for_unregistration( $url_to );
@@ -33,7 +33,7 @@ function unregister_block_type( $type_s, ?string $url_to = null ): void {
  */
 function unregister_block_category( $category_s, ?string $url_to = null ): void {
 	$inst = _get_unregistered_blocks();
-	$cs   = is_array( $category_s ) ? $category_s : array( $category_s );
+	$cs   = (array) $category_s;
 
 	$inst->categories = array_merge( $inst->categories, $cs );
 	_enqueue_script_for_unregistration( $url_to );
@@ -48,7 +48,7 @@ function unregister_block_category( $category_s, ?string $url_to = null ): void 
  */
 function unregister_block_variation( string $type, $variation_s, ?string $url_to = null ): void {
 	$inst = _get_unregistered_blocks();
-	$vs   = is_array( $variation_s ) ? $variation_s : array( $variation_s );
+	$vs   = (array) $variation_s;
 
 	if ( isset( $inst->type_variations[ $type ] ) ) {
 		$inst->type_variations[ $type ] = array_merge( $inst->type_variations[ $type ], $vs );
@@ -67,7 +67,7 @@ function unregister_block_variation( string $type, $variation_s, ?string $url_to
  */
 function unregister_block_style( string $type, $style_s, ?string $url_to = null ): void {
 	$inst = _get_unregistered_blocks();
-	$ss   = is_array( $style_s ) ? $style_s : array( $style_s );
+	$ss   = (array) $style_s;
 
 	if ( isset( $inst->type_styles[ $type ] ) ) {
 		$inst->type_styles[ $type ] = array_merge( $inst->type_styles[ $type ], $ss );
@@ -93,28 +93,28 @@ function _get_unregistered_blocks(): object {
 		/**
 		 * Block types.
 		 *
-		 * @var array
+		 * @var string[]
 		 */
 		public $types = array();
 
 		/**
 		 * Block categories.
 		 *
-		 * @var array
+		 * @var string[]
 		 */
 		public $categories = array();
 
 		/**
 		 * Block type to variations.
 		 *
-		 * @var array
+		 * @var string[]
 		 */
 		public $type_variations = array();
 
 		/**
 		 * Block type to styles.
 		 *
-		 * @var array
+		 * @var string[]
 		 */
 		public $type_styles = array();
 	};

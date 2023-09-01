@@ -4,7 +4,7 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2022-10-12
+ * @version 2023-09-01
  */
 
 namespace wpinc\blok\field;
@@ -15,7 +15,7 @@ require_once __DIR__ . '/assets/admin-current-post.php';
 /**
  * Adds field block.
  *
- * @param array $args {
+ * @param array<string, string|bool> $args {
  *     Arguments.
  *
  *     @type string 'key'       Key of post meta.
@@ -35,12 +35,13 @@ function add_block( array $args = array() ): void {
 		'do_render' => true,
 	);
 	// phpcs:enable
+	$pt = $args['post_type'];
 
 	$inst = _get_instance();
-	if ( ! isset( $args['post_type'] ) ) {
-		$inst->pt_entries[ $args['post_type'] ] = array();
+	if ( ! isset( $inst->pt_entries[ $pt ] ) ) {
+		$inst->pt_entries[ $pt ] = array();
 	}
-	$inst->pt_entries[ $args['post_type'] ][] = array(
+	$inst->pt_entries[ $pt ][] = array(
 		'key'       => $args['key'],
 		'label'     => $args['label'],
 		'do_render' => $args['do_render'],
@@ -68,7 +69,7 @@ function _register_block(): void {
 /**
  * Callback function for 'init' hook.
  */
-function _cb_init() {
+function _cb_init(): void {
 	$post_type = \wpinc\get_admin_post_type();
 	if ( ! $post_type ) {
 		return;
@@ -86,10 +87,10 @@ function _cb_init() {
 /**
  * Callback function for 'save_post' hook.
  *
- * @param int      $post_ID Post ID.
+ * @param int      $post_id Post ID.
  * @param \WP_Post $post    Post.
  */
-function _cb_save_post( int $post_ID, \WP_Post $post ): void {
+function _cb_save_post( int $post_id, \WP_Post $post ): void {
 	$inst = _get_instance();
 	if ( ! isset( $inst->pt_entries['*'] ) && ! isset( $inst->pt_entries[ $post->post_type ] ) ) {
 		return;
@@ -100,7 +101,7 @@ function _cb_save_post( int $post_ID, \WP_Post $post ): void {
 	$bs = parse_blocks( $post->post_content );
 	foreach ( $bs as $b ) {
 		if ( 'wpinc/field' === $b['blockName'] ) {
-			$key = $b['attrs']['key'];
+			$key = (string) $b['attrs']['key'];
 			if ( isset( $entries[ $key ] ) ) {
 				if ( ! isset( $key_sbs[ $key ] ) ) {
 					$key_sbs[ $key ] = array();
@@ -114,15 +115,15 @@ function _cb_save_post( int $post_ID, \WP_Post $post ): void {
 	foreach ( $key_sbs as $key => $sb ) {
 		$fn  = $entries[ $key ]['do_render'] ? 'render_block' : 'serialize_block';
 		$val = implode( '', array_map( $fn, $sb ) );
-		update_post_meta( $post_ID, $key, $val );
+		update_post_meta( $post_id, $key, $val );
 	}
 }
 
 /**
  * Callback function for 'pre_render_block' hook.
  *
- * @param string|null $pre_render   The pre-rendered content. Default null.
- * @param array       $parsed_block The block being rendered.
+ * @param string|null          $pre_render   The pre-rendered content. Default null.
+ * @param array<string, mixed> $parsed_block The block being rendered.
  * @return string|null Pre-rendered string.
  */
 function _cb_pre_render_block( ?string $pre_render, array $parsed_block ): ?string {
@@ -138,7 +139,7 @@ function _cb_pre_render_block( ?string $pre_render, array $parsed_block ): ?stri
  * @access private
  *
  * @param string $post_type Post type.
- * @return array Entries.
+ * @return array<string, string>[] Entries.
  */
 function _get_target_entries( string $post_type ): array {
 	$inst = _get_instance();
@@ -172,7 +173,7 @@ function _get_instance(): object {
 		/**
 		 * Array of post type to entries.
 		 *
-		 * @var array
+		 * @var array<string, array<string, string|bool>[]>
 		 */
 		public $pt_entries = array();
 	};
