@@ -4,8 +4,10 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2023-09-01
+ * @version 2023-11-05
  */
+
+declare(strict_types=1);
 
 namespace wpinc\blok;
 
@@ -21,7 +23,7 @@ function unregister_block_type( $type_s, ?string $url_to = null ): void {
 	$inst = _get_unregistered_blocks();
 	$ts   = (array) $type_s;
 
-	$inst->types = array_merge( $inst->types, $ts );
+	$inst->types = array_merge( $inst->types, $ts );  // @phpstan-ignore-line
 	_enqueue_script_for_unregistration( $url_to );
 }
 
@@ -35,7 +37,7 @@ function unregister_block_category( $category_s, ?string $url_to = null ): void 
 	$inst = _get_unregistered_blocks();
 	$cs   = (array) $category_s;
 
-	$inst->categories = array_merge( $inst->categories, $cs );
+	$inst->categories = array_merge( $inst->categories, $cs );  // @phpstan-ignore-line
 	_enqueue_script_for_unregistration( $url_to );
 }
 
@@ -53,7 +55,7 @@ function unregister_block_variation( string $type, $variation_s, ?string $url_to
 	if ( isset( $inst->type_variations[ $type ] ) ) {
 		$inst->type_variations[ $type ] = array_merge( $inst->type_variations[ $type ], $vs );
 	} else {
-		$inst->type_variations[ $type ] = $vs;
+		$inst->type_variations[ $type ] = $vs;  // @phpstan-ignore-line
 	}
 	_enqueue_script_for_unregistration( $url_to );
 }
@@ -72,7 +74,7 @@ function unregister_block_style( string $type, $style_s, ?string $url_to = null 
 	if ( isset( $inst->type_styles[ $type ] ) ) {
 		$inst->type_styles[ $type ] = array_merge( $inst->type_styles[ $type ], $ss );
 	} else {
-		$inst->type_styles[ $type ] = $ss;
+		$inst->type_styles[ $type ] = $ss;  // @phpstan-ignore-line
 	}
 	_enqueue_script_for_unregistration( $url_to );
 }
@@ -148,10 +150,10 @@ function _enqueue_script_for_unregistration( ?string $url_to = null ): void {
 			);
 			$inst = _get_unregistered_blocks();
 			$ps   = array(
-				'types'           => $inst->types,
-				'categories'      => $inst->categories,
-				'type_variations' => $inst->type_variations,
-				'type_styles'     => $inst->type_styles,
+				'types'           => $inst->types,  // @phpstan-ignore-line
+				'categories'      => $inst->categories,  // @phpstan-ignore-line
+				'type_variations' => $inst->type_variations,  // @phpstan-ignore-line
+				'type_styles'     => $inst->type_styles,  // @phpstan-ignore-line
 			);
 			wp_localize_script( 'wpinc-blok-unregistration', 'wpinc_blok_unregistration', $ps );
 		}

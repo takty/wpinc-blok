@@ -4,8 +4,10 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2023-09-01
+ * @version 2023-11-05
  */
+
+declare(strict_types=1);
 
 namespace wpinc\blok\field;
 
@@ -39,7 +41,7 @@ function add_block( array $args = array() ): void {
 
 	$inst = _get_instance();
 	if ( ! isset( $inst->pt_entries[ $pt ] ) ) {
-		$inst->pt_entries[ $pt ] = array();
+		$inst->pt_entries[ $pt ] = array();  // @phpstan-ignore-line
 	}
 	$inst->pt_entries[ $pt ][] = array(
 		'key'       => $args['key'],

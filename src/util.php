@@ -4,8 +4,10 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2023-08-30
+ * @version 2023-11-05
  */
+
+declare(strict_types=1);
 
 namespace wpinc\blok;
 
@@ -124,7 +126,7 @@ function _cb_save_post( int $post_id, \WP_Post $post, int $first_level ): void {
 	$c = _filter_block_attributes(
 		$c,
 		'heading',
-		function ( $ats ) use ( $first_level ) {
+		function ( array $ats ) use ( $first_level ): array {
 			if ( isset( $ats['level'] ) ) {
 				if ( $ats['level'] < $first_level ) {
 					$ats['level'] = $first_level;
@@ -158,13 +160,13 @@ function _cb_save_post( int $post_id, \WP_Post $post, int $first_level ): void {
  *
  * @param string   $doc  Document.
  * @param string   $name Block name.
- * @param callable $fn   Function for filtering attributes.
+ * @param callable $f    Function for filtering attributes.
  * @return string Filtered document.
  */
-function _filter_block_attributes( string $doc, string $name, callable $fn ): string {
+function _filter_block_attributes( string $doc, string $name, callable $f ): string {
 	$offset = 0;
 	do {
-		list( $doc, $offset ) = _next_block( $doc, $name, $fn, $offset );
+		list( $doc, $offset ) = _next_block( $doc, $name, $f, $offset );
 	} while ( $offset );
 	return $doc;
 }
@@ -176,11 +178,11 @@ function _filter_block_attributes( string $doc, string $name, callable $fn ): st
  *
  * @param string   $doc    Document.
  * @param string   $name   Block name.
- * @param callable $fn     Function for filtering attributes.
+ * @param callable $f      Function for filtering attributes.
  * @param int      $offset Offset index.
  * @return array{string, int} Array of modified document and new offset index.
  */
-function _next_block( string $doc, string $name, callable $fn, int $offset ): array {
+function _next_block( string $doc, string $name, callable $f, int $offset ): array {
 	$ms  = null;
 	$res = preg_match(
 		"/<!--\s+wp:$name\s+(?P<ats>{(?:(?:[^}]+|}+(?=})|(?!}\s+\/?-->).)*+)?}\s+)?-->/s",
@@ -196,9 +198,16 @@ function _next_block( string $doc, string $name, callable $fn, int $offset ): ar
 
 	$has_ats = isset( $ms['ats'] ) && -1 !== $ms['ats'][1];
 	$ats     = json_decode( $has_ats ? $ms['ats'][0] : '{}', true );
-	$new_ats = $fn( $ats );
+	$new_ats = $f( $ats );
 
-	$new = "<!-- wp:$name " . ( empty( $new_ats ) ? '' : ( wp_json_encode( $new_ats ) . ' ' ) ) . '-->';
+	$ats_cont = '';
+	if ( ! empty( $new_ats ) ) {
+		$val = wp_json_encode( $new_ats );
+		if ( is_string( $val ) ) {
+			$ats_cont = $val . ' ';
+		}
+	}
+	$new = "<!-- wp:$name $ats_cont-->";
 	$doc = substr_replace( $doc, $new, $at, strlen( $m ) );
 
 	return array( $doc, $at + strlen( $new ) );
