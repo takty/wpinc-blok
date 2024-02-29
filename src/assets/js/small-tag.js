@@ -2,7 +2,7 @@
  * Small Tag
  *
  * @author Takuto Yanagida
- * @version 2022-09-07
+ * @version 2024-02-29
  *
  * Based on https://webomnizz.com/gutenberg-editor-add-button-to-the-toolbar/
  */
@@ -14,7 +14,7 @@
 		element    : { createElement },
 		data       : { withSelect },
 		blockEditor: { RichTextToolbarButton },
-		richText,
+		richText   : { toggleFormat, registerFormatType },
 	} = wp;
 	const el = createElement;
 
@@ -22,11 +22,11 @@
 		return el(
 			RichTextToolbarButton,
 			{
-				icon   : 'admin-customizer',
+				icon   : 'edit',
 				title  : __('Small', 'wpinc'),
 				onClick: () => {
 					props.onChange(
-						wp.richText.toggleFormat(props.value, {
+						toggleFormat(props.value, {
 							type: 'wpinc/small'
 						})
 					);
@@ -38,7 +38,7 @@
 	const ConditionalSmallButton = compose(
 		withSelect(select => {
 			return {
-				selectedBlock: select('core/editor').getSelectedBlock()
+				selectedBlock: select('core/block-editor').getSelectedBlock()
 			}
 		}),
 		ifCondition(props => {
@@ -49,7 +49,7 @@
 		})
 	)(SmallButton);
 
-	richText.registerFormatType('wpinc/small', {
+	registerFormatType('wpinc/small', {
 		title    : __('Small', 'wpinc'),
 		tagName  : 'small',
 		className: null,
