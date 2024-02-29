@@ -26,6 +26,7 @@
 	"dependencies": {
 		"@babel/core": "^7.24.0",
 		"@babel/preset-env": "^7.24.0",
+		"del": "^7.1.0",
 		"gettext-parser": "^8.0.0",
 		"gulp": "^4.0.2",
 		"gulp-babel": "^8.0.0",
