@@ -27,12 +27,10 @@
   line-height: 1;
 }
 .wp-block-wpinc-frame:is(.is-selected, .has-child-selected) > .block-editor-inner-blocks > .block-editor-block-list__layout > *:first-child {
-  -webkit-margin-before: 0;
-          margin-block-start: 0;
+  margin-block-start: 0;
 }
 .wp-block-wpinc-frame:is(.is-selected, .has-child-selected) > .block-editor-inner-blocks > .block-editor-block-list__layout > *:last-child {
-  -webkit-margin-after: 0;
-          margin-block-end: 0;
+  margin-block-end: 0;
 }
 
 /*# sourceMappingURL=index.css.map*/
