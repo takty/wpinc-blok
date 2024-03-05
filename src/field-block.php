@@ -4,7 +4,7 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2024-02-29
+ * @version 2024-03-05
  */
 
 declare(strict_types=1);
@@ -83,24 +83,22 @@ function add_block( array $args ): bool {
  */
 function _register_block( string $pt ): void {
 	static $do_once_pt = array();
-	if ( in_array( $pt, $do_once_pt, true ) ) {
-		return;
+	if ( ! in_array( $pt, $do_once_pt, true ) ) {
+		$do_once_pt[] = $pt;
+		add_filter( "rest_prepare_$pt", '\wpinc\blok\field\_cb_rest_prepare_post_type', 10, 3 );
 	}
-	add_filter( "rest_prepare_$pt", '\wpinc\blok\field\_cb_rest_prepare_post_type', 10, 3 );
-
 	static $do_once = false;
-	if ( $do_once ) {
-		return;
-	}
-	$do_once = true;
-	\wpinc\initialize_theme_plugin_url();
+	if ( ! $do_once ) {
+		$do_once = true;
+		\wpinc\initialize_theme_plugin_url();
 
-	add_action( 'init', '\wpinc\blok\field\_cb_init' );
-	add_action( 'save_post', '\wpinc\blok\field\_cb_save_post', 10, 2 );
-	add_filter( 'pre_render_block', '\wpinc\blok\field\_cb_pre_render_block', 10, 2 );
+		add_action( 'init', '\wpinc\blok\field\_cb_init' );
+		add_action( 'save_post', '\wpinc\blok\field\_cb_save_post', 10, 2 );
+		add_filter( 'pre_render_block', '\wpinc\blok\field\_cb_pre_render_block', 10, 2 );
 
-	if ( is_admin() ) {
-		add_filter( 'the_editor_content', '\wpinc\blok\field\_cb_the_editor_content' );
+		if ( is_admin() ) {
+			add_filter( 'the_editor_content', '\wpinc\blok\field\_cb_the_editor_content' );
+		}
 	}
 }
 
