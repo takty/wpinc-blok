@@ -4,7 +4,7 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2023-11-01
+ * @version 2024-03-12
  */
 
 declare(strict_types=1);
@@ -63,6 +63,7 @@ function register_custom_blocks( array $args = array() ): void {
 	// phpcs:enable
 
 	$hook = version_compare( $GLOBALS['wp_version'], '5.8', '<' ) ? 'block_categories' : 'block_categories_all';
+	/** @psalm-suppress HookNotFound */  // phpcs:ignore
 	add_filter(
 		$hook,
 		function ( array $cats ) use ( $args ): array {
@@ -83,7 +84,9 @@ function register_custom_blocks( array $args = array() ): void {
 					wp_localize_script( "wpinc-$b-editor-script", "wpinc_{$b}_args", (array) $args[ "block_$b" ] );
 				}
 			}
-		}
+		},
+		10,
+		0
 	);
 	foreach ( $args['block_frame']['styles'] as $name => $label ) {
 		register_block_style(

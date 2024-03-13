@@ -4,7 +4,7 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2023-11-05
+ * @version 2024-03-12
  */
 
 declare(strict_types=1);
@@ -156,6 +156,8 @@ function _enqueue_script_for_unregistration( ?string $url_to = null ): void {
 				'type_styles'     => $inst->type_styles,  // @phpstan-ignore-line
 			);
 			wp_localize_script( 'wpinc-blok-unregistration', 'wpinc_blok_unregistration', $ps );
-		}
+		},
+		10,
+		0
 	);
 }

@@ -4,7 +4,7 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2023-11-05
+ * @version 2024-03-12
  */
 
 declare(strict_types=1);
@@ -31,7 +31,9 @@ function add_small_button_to_heading( ?string $url_to = null ): void {
 				true
 			);
 			wp_set_script_translations( 'wpinc-blok-small-tag', 'wpinc', __DIR__ . '\languages' );
-		}
+		},
+		10,
+		0
 	);
 }
 
@@ -53,7 +55,9 @@ function add_list_styles( ?string $url_to = null ): void {
 				true
 			);
 			wp_set_script_translations( 'wpinc-blok-list-style', 'wpinc', __DIR__ . '\languages' );
-		}
+		},
+		10,
+		0
 	);
 }
 
@@ -89,7 +93,9 @@ function set_used_heading( int $first_level = 2, int $count = 3, ?string $url_to
 				true
 			);
 			wp_localize_script( 'wpinc-blok-used-heading', 'wpinc_blok_used_heading', array( 'first_level' => $first_level ) );
-		}
+		},
+		10,
+		0
 	);
 	add_action(
 		'save_post',
@@ -114,7 +120,7 @@ function _cb_save_post( int $post_id, \WP_Post $post, int $first_level ): void {
 		return;
 	}
 	$parent_id = wp_is_post_revision( $post_id );
-	if ( $parent_id ) {
+	if ( is_int( $parent_id ) ) {
 		$post_id = $parent_id;
 	}
 

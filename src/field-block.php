@@ -4,7 +4,7 @@
  *
  * @package Wpinc Blok
  * @author Takuto Yanagida
- * @version 2024-03-05
+ * @version 2024-03-12
  */
 
 declare(strict_types=1);
@@ -40,7 +40,7 @@ const BLOCK_NAME = 'wpinc/field';
  * @return bool True if the meta key was successfully registered, false if not.
  */
 function add_block( array $args ): bool {
-	if ( empty( $args['key'] ) || empty( $args['label'] ) || empty( $args['post_type'] ) ) {
+	if ( '' === $args['key'] || '' === $args['label'] || '' === $args['post_type'] ) {
 		return false;
 	}
 	$args['do_render']          = $args['do_render'] ?? true;
@@ -92,7 +92,7 @@ function _register_block( string $pt ): void {
 		$do_once = true;
 		\wpinc\initialize_theme_plugin_url();
 
-		add_action( 'init', '\wpinc\blok\field\_cb_init' );
+		add_action( 'init', '\wpinc\blok\field\_cb_init', 10, 0 );
 		add_action( 'save_post', '\wpinc\blok\field\_cb_save_post', 10, 2 );
 		add_filter( 'pre_render_block', '\wpinc\blok\field\_cb_pre_render_block', 10, 2 );
 
@@ -107,7 +107,7 @@ function _register_block( string $pt ): void {
  */
 function _cb_init(): void {
 	$pt = \wpinc\get_admin_post_type();
-	if ( ! $pt ) {
+	if ( ! is_string( $pt ) ) {
 		return;
 	}
 	if ( ! post_type_supports( $pt, 'custom-fields' ) ) {
@@ -131,7 +131,7 @@ function _cb_init(): void {
  */
 function _cb_the_editor_content( string $content ): string {
 	$pt = \wpinc\get_admin_post_type();
-	if ( ! $pt ) {
+	if ( ! is_string( $pt ) ) {
 		return $content;
 	}
 	$tes = _get_target_entries( $pt );
@@ -175,7 +175,7 @@ function _cb_rest_prepare_post_type( \WP_REST_Response $response, \WP_Post $post
 		return $response;
 	}
 	$pt = get_post_type( $post );
-	if ( ! $pt ) {
+	if ( ! is_string( $pt ) ) {
 		return $response;
 	}
 	$tes = _get_target_entries( $pt );
