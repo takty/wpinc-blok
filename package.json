@@ -24,8 +24,8 @@
 		"remove-files-webpack-plugin": "^1.5.0"
 	},
 	"dependencies": {
-		"@babel/core": "^7.24.0",
-		"@babel/preset-env": "^7.24.0",
+		"@babel/core": "^7.24.3",
+		"@babel/preset-env": "^7.24.3",
 		"del": "^7.1.0",
 		"gettext-parser": "^8.0.0",
 		"gulp": "^4.0.2",
