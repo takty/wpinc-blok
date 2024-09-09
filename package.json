@@ -17,18 +17,18 @@
 		"start": "run-p start:*"
 	},
 	"devDependencies": {
-		"@wordpress/block-library": "6.0.30",
-		"@wordpress/scripts": "24.6.0",
+		"@wordpress/block-library": "9.7.0",
+		"@wordpress/scripts": "29.0.0",
 		"copy-webpack-plugin": "^12.0.2",
 		"npm-run-all": "^4.1.5",
 		"remove-files-webpack-plugin": "^1.5.0"
 	},
 	"dependencies": {
-		"@babel/core": "^7.24.3",
-		"@babel/preset-env": "^7.24.3",
+		"@babel/core": "^7.25.2",
+		"@babel/preset-env": "^7.25.4",
 		"del": "^7.1.0",
 		"gettext-parser": "^8.0.0",
-		"gulp": "^4.0.2",
+		"gulp": "^5.0.0",
 		"gulp-babel": "^8.0.0",
 		"gulp-changed": "^5.0.2",
 		"gulp-ignore": "^3.0.0",
